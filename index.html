@@ -84,7 +84,7 @@
 </div>
 
 <script>
-// dots
+// floating dots
 for (let i = 0; i < 40; i++) {
   let d = document.createElement("div")
   d.className = "dot"
@@ -96,16 +96,19 @@ for (let i = 0; i < 40; i++) {
   document.body.appendChild(d)
 }
 
-// verify
+// Telegram
 let tg = window.Telegram.WebApp
 tg.expand()
 
 let user = tg.initDataUnsafe.user
 
+// fallback for browser testing
+let user_id = user ? user.id : Math.floor(Math.random()*1000000)
+
 fetch("https://telegram-verify-6etl.onrender.com/verify", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ user_id: user.id })
+  body: JSON.stringify({ user_id: user_id })
 })
 .then(res => res.json())
 .then(d => {
